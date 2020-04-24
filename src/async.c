@@ -31,12 +31,12 @@ void xattr_get_execute(napi_env env, void* _data) {
     return ;
   }
 
-  data->value = malloc((size_t) data->value_length);
+  data->value = malloc((size_t) data->value_length + 1);
 
 #ifdef __APPLE__
-  data->value_length = getxattr(data->filename, data->attribute, data->value, (size_t) data->value_length, 0, 0);
+  data->value_length = getxattr(data->filename, data->attribute, data->value, (size_t) data->value_length + 1, 0, 0);
 #else
-  data->value_length = getxattr(data->filename, data->attribute, data->value, (size_t) data->value_length);
+  data->value_length = getxattr(data->filename, data->attribute, data->value, (size_t) data->value_length + 1);
 #endif
 
   if (data->value_length == -1) {
